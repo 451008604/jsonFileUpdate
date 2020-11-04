@@ -1,4 +1,4 @@
-package document
+package file
 
 import (
 	"bufio"
@@ -12,14 +12,8 @@ func FileRead(path string) string {
 	//打开文件
 	file, err := os.Open(path)
 	if err != nil {
-		fmt.Println("打开文件错误：", err)
-
-		//如果没有找到对应文件则创建新的文件
-		file, err = os.Create(path)
-		if err != nil {
-			fmt.Println("文件创建失败：", err)
-		}
-		fmt.Println("创建了新的文件：", path)
+		fmt.Println("读取文件时打开错误：", err)
+		return ""
 	}
 
 	//设置缓存区
@@ -61,4 +55,13 @@ func Bufio(path string) {
 		fmt.Printf(str)
 	}
 	fmt.Println("文件读取结束！")
+}
+
+/*检查文件是否存在*/
+func CheckFileExist(fileName string) bool {
+	_, err := os.Stat(fileName)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return true
 }
