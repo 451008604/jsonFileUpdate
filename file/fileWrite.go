@@ -1,10 +1,21 @@
-package document
+package file
 
 import (
 	"bufio"
 	"fmt"
 	"os"
 )
+
+func FileCreate(path string) *os.File {
+	//创建新的文件
+	file, err := os.Create(path)
+	if err != nil {
+		fmt.Println("文件创建失败：", err)
+		return nil
+	}
+	fmt.Println("创建了新的文件：", path)
+	return file
+}
 
 func FileWrite(path string, str string) {
 	// 打开一个文件
@@ -23,7 +34,7 @@ func FileWrite(path string, str string) {
 	// 读写模式打开一个文件并清空内容
 	file, err := os.OpenFile(path, os.O_RDWR|os.O_TRUNC, 0644)
 	if err != nil {
-		fmt.Println("open file err=", err)
+		fmt.Println("写入文件时打开错误：", err)
 	}
 
 	// 写入时 使用带缓存的 *Writer
